@@ -1,0 +1,262 @@
+% W³odek Bzyl  <matwb@univ.gda.pl>
+%
+% Format A4 do sk³adu testów. 
+
+\input font-plr.sty
+\input tpagesize.tex
+\input mimulcol.tex
+\input gustlib-verbatim.tex
+
+\catcode`\@=11
+
+\newlinechar=`\^^J
+\def\thisstyle{JPTEST}
+\def\fileversion{1.0}
+\def\filedate{8 XII 2004} % test z JP
+\def\\{\hfil\break}
+
+\message{Format: `\thisstyle\space\fileversion'\space<\filedate>^^J}
+
+\def\ZESTAW{\begingroup\catcode`\^^M=12 \XZESTAW}
+\def\WHERE{\begingroup\catcode`\^^M=12 \XWHERE}
+{\catcode`\^^M=12 %
+ \gdef\XZESTAW#1^^M{\gdef\XXZESTAW{#1}\endgroup}%
+ \gdef\XWHERE#1^^M{\gdef\XXWHERE{#1\hfill\it Zestaw \XXZESTAW}\endgroup}}
+
+% warto¶ci domy¶lne
+\ZESTAW 0
+\WHERE {\bf Test z Jêzyków Programowania\ \ \ \ \number\year/\number\month
+        \hfil \it Zestaw \XXZESTAW}
+
+% Nastêpne zadanie
+\def\filbreak{\par\vfil\penalty-500\vfilneg}
+\font\numberF=plbx10 at 12pt
+\newdimen\zskipamount \zskipamount=\bigskipamount
+\newcount\z@dcnt
+\newcount\l@ttercnt \l@ttercnt=``
+\def\Z{\global\advance\z@dcnt by 1 \global\l@ttercnt=``
+  \filbreak
+  \vskip\zskipamount
+  \indent\hang
+    \llap{\hbox to \parindent{{\numberF\number\z@dcnt}.\hss}}\ignorespaces}
+\def\ZA{\Z\A}
+
+% Zapisz odpowied¼ do pliku
+\newwrite\answers
+\immediate\openout\answers=klucz.tex
+\immediate\write\answers{\string\odZestawu=0 }
+
+\newtoks\ttt
+\def\append#1{\ttt=\expandafter{\the\ttt#1}}
+\newcount\totalans \totalans=3
+\newcount\currentans \currentans=1
+% Lepszy interfejs..
+% Zmieniæ, je¶li liczba zadañ ró¿na od 50!
+%\newcount\maxincol \maxincol=25
+\newcount\maxincol \maxincol=100
+\newcount\currentrow \currentrow=1
+\newcount\boxno \boxno=0
+
+% Wybierz miêdzy a), b), c)
+\def\hang{\hangindent\parindent}
+\def\textindent#1{\append#1%
+   \ifnum\currentans=\totalans
+      \ifnum\currentrow=1
+         \immediate\write\answers{\noexpand\key \number\boxno}%
+         \global\advance\boxno by 2
+      \fi
+      \global\currentans=1
+      \immediate\write\answers{\noexpand\R \the\ttt}\ttt={}%
+%      \ifnum\currentrow=\maxincol
+%         \immediate\write\answers{\noexpand\endkey}%
+%         \global\currentrow=1
+%      \else
+         \global\advance\currentrow by 1
+%      \fi  
+   \else
+      \global\advance\currentans by 1
+   \fi
+   \indent\llap{\hbox to 0.85em{\char\l@ttercnt\hss)}\kern0.85em}\ignorespaces}
+
+\outer\def\bye{\par\vfill
+%  \immediate\write\answers{\noexpand\endkey}%
+  \supereject\end}
+
+\def\emspace{\kern 1em }
+\def\A{\global\advance\l@ttercnt by 1\hang\textindent}
+\def\B{\emspace\A}
+\let\C=\B
+
+\def\a{\par\A}
+\let\b=\a
+\let\c=\a
+
+\def\#{\vskip 4pt }
+\def\NL{\hfil\break}
+
+% Obrazki..
+% Lepszy interfejs: \rightpicture <fname> rightoffset=<dimen>
+\def\rightpicture#1#2%
+  {\vadjust{\rightline{\smash{\hbox{\eps{#1}}}\kern#2}}}
+
+% box size
+
+\newdimen\boxwidth \boxwidth = 16mm
+\newdimen\boxheight \boxheight = 5mm
+\newdimen\boxdepth \boxdepth = 2mm
+
+% Klucze
+\newcount\odZestawu \odZestawu=0
+\def\!{\vrule height \boxheight depth \boxdepth width 0mm}
+\def\crrule{\cr\noalign{\hrule}}
+%\font\afont=plr10
+
+% G³ówka
+\def\G{\!&\rm && a&& b&& c&\cr}
+
+\def\key#1{\setbox #1=\vbox\bgroup\offinterlineskip
+   \halign\bgroup\!\vrule##&\hbox to 15mm{\hss##\hss}&&
+       \vrule##&\hbox to \boxwidth{\rm\hfil##\hfil}\cr\noalign{\hrule}
+     \G\noalign{\hrule}}
+\def\endkey{\egroup\egroup}
+
+%\def\keys#1#2{\line{\hss\box#1\hskip0.5in\box#2\hss}}
+\def\keys{\hbox to 190mm{\hss\box0\hss}}
+
+\def\printkeys{\immediate\write\answers{\noexpand\endkey}%
+   \def\R##1##2##3{\!&\global\advance\odZestawu by 1
+      \rm\number\odZestawu &&$##1$&&$##2$&&$##3$&\crrule}
+   \vfil\eject
+   \immediate\closeout\answers
+   \centerline{\XXWHERE}
+   \medskip
+   \centerline{\it Zestaw \XXZESTAW}
+   \bigskip
+   \input klucz.tex
+   \begingroup
+   \fontsetup{10}{7}{5}{10}{7}{5}{12}
+   \keys
+   \medskip
+   \noindent{\tenit Legenda:\enspace$+=\hbox{TAK}$\quad$-=\hbox{NIE}$}
+   \par
+   \endgroup}
+ 
+\def\printnokeys{\immediate\write\answers{\noexpand\endkey}%
+   \def\R##1##2##3{\!&\global\advance\odZestawu by 1
+      \rm\number\odZestawu &&\enspace&&\enspace&&\enspace&\crrule}
+   \vfil\eject
+   \immediate\closeout\answers
+   \centerline{\XXWHERE}
+   \medskip
+   \centerline{\it Zestaw \XXZESTAW}
+   \bigskip
+   \input klucz.tex
+   \begingroup
+   \keys
+   \par
+   \endgroup}
+
+% Krótki opis testu -- reszta
+
+\font\zestawF=plti10 at 14pt
+
+\def\NAGLOWEK{\begingroup
+   \fontsetup{14}{12}{10}{14}{12}{10}{17}
+   \centerline{\XXWHERE}
+   \medskip
+   \endgroup}
+
+\def\raggedright{\rightskip\z@ plus10em \spaceskip.3333em \xspaceskip.5em\relax}
+
+% OTR 
+
+\maxdepth=2.2pt
+
+\output{\plainoutput}
+
+\def\plainoutput{\shipout\vbox{\pagebody\makefootline}%
+  \advancepageno}
+\def\pagebody{\vbox to\vsize{\boxmaxdepth\maxdepth \pagecontents}}
+
+\def\leftfootline{}
+\def\rightfootline{\tenrm
+  \tenit \hfil \ifnum\pageno>1 Zestaw\enspace{\XXZESTAW}\fi 
+}
+\footline={\ifodd\pageno\rightfootline\else\leftfootline\fi}
+
+\def\pagecontents{\dimen@=\dp\@cclv \unvbox\@cclv} % open up \box255
+
+% Matematyka.
+
+\everymath={\displaystyle}
+\mathchardef\forallop="1356 \def\forall{\forallop\limits}
+\mathchardef\existsop="1357 \def\exists{\existsop\limits}
+\def\:{\,{:}\,\,}
+\def\Pr{{\rm P}}
+
+%\def\neq{\kern-0.08em\not\kern0.08em=} \let\ne=\neq
+
+\def\dotproduct#1#2{\overrightarrow{#1}\circ\overrightarrow{#2}}
+\def\vector#1{\overrightarrow{#1}}
+
+\mathchardef\ordinarycomma="013B
+\mathchardef\decimalcomma="613B
+\mathcode`\,="8000
+{\catcode`\,=\active \gdef,{\obeyspaces\futurelet\next\smartcomma}}
+\def\smartcomma{\ifx\space\next\decimalcomma\else\ordinarycomma\fi}
+
+\def\odc#1#2;{\ifx<#1\let\l@ftb=\langle\else\let\l@ftb=#1\fi\left\l@ftb#2;\@dc}
+\def\@dc{\futurelet\next\proc@ss}
+\def\proc@ss
+ {\ifx)\next\let\r@ghtb=)
+    \let\nxt\finish@dc
+  \else
+    \ifx>\next\let\r@ghtb=\rangle
+      \let\nxt\finish@dc
+    \else
+      \let\nxt\proc@@s
+    \fi 
+  \fi\nxt}
+\def\proc@@s#1{#1\@dc}
+\def\finish@dc#1{\right\r@ghtb}
+
+\def\acro#1{{\SMC #1}\spacefactor1000 }
+
+% Pozosta³e parametry
+\parskip=0pt plus 3pt
+\interlinepenalty=10000
+\parindent=3em
+\raggedright
+\columnseprule=0.8pt
+
+\def\verbatimbaselinecorr{0.5pt}
+
+% Verbatim macros, see DeK, pp. 344, 380--382, 351--352
+
+%% \def\uncatcodespecials{\def\do##1{\catcode`##1=12}\dospecials}%
+%% \def\setupverbatim {\tt \advance\baselineskip-\verbatimbaselinecorr
+%%   \obeylines \uncatcodespecials \obeyspaces}%
+%% {\obeyspaces \global\let =\ }% this causes that leading blanks aren't skipped
+%% {\catcode`\|0 \catcode`\\12 |gdef|brev{\brev}}%
+%% \def\?{?}
+%% \catcode`\?13
+%% \edef\verb{\begingroup \let\noexpand?\noexpand\inverb
+%%   \noexpand\setupverbatim \noexpand\doverbatim{\brev}}%
+%% \def\doverbatim#1{\def\next##1#1{##1\endgroup}\next}%
+%% \def\shortverb{\begingroup\setupverbatim\doverbatim}%
+%% \def\inverb#1?{{$\langle$\it #1\/$\rangle$}}
+%% \def?{\shortverb?}
+
+% Example:
+%   \verb
+%   verbatim text
+%   \brev
+% or inline
+%   |!verbatim $text$|
+
+\catcode`\@=0
+
+\catcode`\|=13
+\def|{\begingroup\setupverbatim\doverbatim|}%
+
+\endinput

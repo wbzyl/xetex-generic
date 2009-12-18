@@ -1,0 +1,184 @@
+% Włodek Bzyl <matwb@univ.gda.pl>                      12/XII 2007
+%
+% TODO:
+%
+% makra do składania przedziałów, wektorów, punktów w R^2 i R^3.
+%   odcinek:  (1; 2)
+%   wektor:   [1, 2]
+%   punkt:    (1, 2)
+
+\uselanguage{polish}
+\input gustlib-verbatim.tex
+
+\catcode`\@=11
+
+\newdimen\pagewidth \newdimen\pageheight
+
+\hsize=190mm \vsize=277mm
+
+\pagewidth=\hsize 
+\pageheight=\vsize
+
+\hoffset=-14mm 
+\voffset=-14mm
+
+\newlinechar=`\^^J
+\def\thisstyle{ZADANIA}
+\def\fileversion{2.71}
+\def\filedate{12/XII 2009}
+
+\message{Format: \thisstyle\space\fileversion\space<\filedate>^^J}
+
+\def\ZESTAWA{\begingroup\catcode`\^^M=12 \XZESTAWA}
+\def\ZESTAWB{\begingroup\catcode`\^^M=12 \XZESTAWB}
+\def\WHERE{\begingroup\catcode`\^^M=12 \XWHERE}
+{\catcode`\^^M=12 %
+ \gdef\XZESTAWA#1^^M{\gdef\XXZESTAWA{#1}\endgroup}%
+ \gdef\XZESTAWB#1^^M{\gdef\XXZESTAWB{#1}\endgroup}%
+ \gdef\XWHERE#1^^M{\gdef\XXWHERE{#1}\endgroup}}
+
+% wartości domyślne
+\ZESTAWA Zestaw A
+\ZESTAWB Zestaw B
+\WHERE ---
+
+% Następne zadanie
+\newcount\z@dcnt
+\newcount\l@ttercnt \l@ttercnt=``
+\def\Z{\global\advance\z@dcnt by 1 \global\l@ttercnt=``
+  \vskip\medskipamount
+  \noindent{\bf\number\z@dcnt.\enspace}\ignorespaces}
+\def\ZA{\Z\A}
+\def\resetZcounter{\global\z@dcnt=0\relax}
+
+% Wybierz między a), b), c)
+\def\emspace{\kern1em }
+\def\hang{\hangindent\parindent}
+\def\textindent#1{\indent\llap{\char\l@ttercnt)\emspace}\ignorespaces}
+
+\outer\def\bye{\par\vfill
+  \supereject\end}
+
+\def\A{\global\advance\l@ttercnt by 1\hang\textindent}
+\def\B{\emspace\A}
+\let\C=\B
+
+\def\a{\par\A}
+\let\b=\a
+\let\c=\a
+
+\def\#{\medskip}
+\def\NL{\hfil\break}
+
+% Obrazki..
+% Lepszy interfejs: \rightpicture <fname> rightoffset=<dimen>
+%\def\rightpicture#1#2%
+%  {\vadjust{\rightline{\smash{\hbox{\eps{#1}}}\kern#2}}}
+
+\def\odploop#1\repeat{\global\def\odploopbody{#1}\odpiterate}
+\def\odpiterate{\odploopbody \let\next\odpiterate \else\let\next\relax\fi \next}
+
+\font\manual=manfnt at 18bp % font used for the METAFONT logo, etc.
+\def\dbend{{\manual\char127}} % dangerous bend sign
+
+\def\printheader #1{\resetZcounter
+  \bigbreak
+  \begingroup
+  \fontsetup{14}{12}{10}{14}{12}{10}{14}
+  \vbox{\halign{&\hss\ss##\quad\cr
+     \lower5pt\hbox{\dbend}\kern 34pt Zestaw:&
+        \number\year~/ #1\cr\noalign{\medskip}
+  Nazwisko:\cr\noalign{\medskip}
+  Imię:\cr}}
+%%   Grupa:\cr\noalign{\medskip}
+%%     Nazwisko, Imię:\cr}}
+  \bigskip
+  \hrule
+  \medskip
+  \endgroup}
+
+\def\inter{\medskip\noindent\ignorespaces}
+
+\newcount\odpcounter
+\newdimen\odpvsize \odpvsize=0mm % nie działa
+\def\ODP{\odpcounter=0
+  \bigskip\ignorespaces
+  \begingroup\offinterlineskip
+  \halign{\vrule##&
+      \hbox to \hsize{\hss\vbox to \odpvsize{\parindent=5pt
+         \vrule height 12pt width 0pt\ignorespaces##\vss}}&
+      \vrule##\cr\noalign{\hrule}
+      \odploop\global\advance\odpcounter by 1
+         &\number\odpcounter&\cr\noalign{\hrule}
+      \ifnum\odpcounter<\z@dcnt \repeat\cr}
+  \endgroup}
+
+% Krótki opis testu -- reszta
+\font\headerFont="Myriad Pro/BoldItalic" at 14pt
+\def\NAGLOWEK{\begingroup
+   \fontsetup{14}{12}{10}{14}{12}{10}{17}
+   \hbox to \hsize{\headerFont\XXZESTAWA\hfil\XXWHERE\hfil\XXZESTAWB}
+   \par
+   \endgroup}
+
+% Parametry matematyczne
+\everymath={\displaystyle}
+\mathcode`\,="013B
+\mathchardef\forallop="1356 \def\forall{\forallop\limits}
+\mathchardef\existsop="1357 \def\exists{\existsop\limits}
+\def\:{\,{:}\,\,}
+
+\def\raggedright{\rightskip\z@ plus5em \spaceskip.3333em \xspaceskip.5em\relax}
+
+% Dodatkowe makra
+\def\dotproduct#1#2{\overrightarrow{#1}\circ\overrightarrow{#2}}
+\def\vector#1{\overrightarrow{#1}}
+
+% OTR
+
+\maxdepth=2.2pt
+
+%\def\plainoutput{\shipout\vbox{\pagebody\makefootline}%
+%  \advancepageno}
+\def\pagebody{\vtop{\boxmaxdepth\maxdepth \pagecontents}}
+\def\pagecontents{\dimen@=\dp\@cclv \unvbox\@cclv} % open up \box255
+
+\def\leftfootline{\hss\tenit\folio\hss}
+\def\rightfootline{\tenit
+  \rlap{Zestaw\enspace{\XXZESTAW}\qquad\XXWHERE}%
+  \hss\tenit\folio\hss}
+\def\firstfootline{\relax}
+\footline={\ifnum\pageno=1\firstfootline\else
+    \ifodd\pageno\rightfootline\else\leftfootline\fi\fi}
+
+\newdimen\fullhsize
+\fullhsize=\hsize \hsize=0.44\hsize
+\def\fullline{\hbox to \fullhsize}
+
+\let\lr=L \newbox\leftcolumn
+
+\output{\if L\lr
+  \global\setbox\leftcolumn\columnbox \global\let\lr=R
+  \else \doubleformat \global\let\lr=L\fi
+  \ifnum\outputpenalty>-20000 \else\dosupereject\fi}
+
+\def\doubleformat{\shipout
+  \vbox{\fullline{\box\leftcolumn\hfil\vrule\hfil\columnbox}
+  \makefootline}
+  \advancepageno}
+\def\columnbox{\leftline{\pagebody}}
+
+\font\sectionFont="Myriad Pro/I" at 14pt
+
+\def\Kolokwium{\bigskip\leftline{\hskip35pt \sectionFont Kolokwium}\medskip}
+\def\Egzamin{\bigskip\leftline{\hskip35pt \sectionFont Egzamin}\medskip}
+\def\Sprawdzian{\bigskip\leftline{\hskip35pt \sectionFont Sprawdzian}\medskip}
+
+% Pozostałe parametry
+\parskip=0pt plus 3pt
+\interlinepenalty=10000
+\parindent=2em
+\raggedright
+
+\catcode`\@=0
+\endinput

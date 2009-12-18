@@ -1,0 +1,208 @@
+%% Font setup for Minion
+%%
+%% fc-list | egrep -i latin
+%%
+%% Latin Modern Roman,LM Roman 10:style=10 Bold Italic,Bold Italic
+%% Latin Modern Roman,LM Roman 10:style=10 Regular,Regular
+%% Latin Modern Roman,LM Roman 10:style=10 Italic,Italic
+%% Latin Modern Mono,LM Mono 10:style=10 Regular,Regular
+%% Latin Modern Mono,LM Mono 10:style=10 Italic,Italic
+%% Latin Modern Roman,LM Roman 10:style=10 Bold,Bold
+%%
+%% fc-list | egrep -i 'minion|myriad' |sort
+%%
+%% Minion Pro:style=Bold
+%% Minion Pro:style=Bold Italic
+%% Minion Pro:style=Italic
+%% Minion Pro:style=Regular
+%% Myriad Pro:style=Bold
+%% Myriad Pro:style=Bold Italic
+%% Myriad Pro:style=Italic
+%% Myriad Pro:style=Regular
+
+%% \font \lmroman  "Latin Modern Roman/I" at 14pt
+%% \font \rmMinion "Minion Pro/Regular:mapping=mex-text,+onum"
+%% \font \itMinion "Minion Pro/Italic"
+%% \font \bfMinion "Minion Pro/Bold"
+
+\catcode`\@=11
+
+\newdimen\normalparindent
+\normalparindent=20\p@
+
+%\newfam\slfam 
+
+\def\fontsetup#1#2#3#4#5#6#7{%
+% Text fonts
+    \font\xtextroman="Minion Pro" at #1\p@
+    \font\xxtextroman="Minion Pro" at #2\p@
+    \font\xxxtextroman="Minion Pro" at #3\p@
+%
+    \font\xtextitalic="Minion Pro/I" at #1\p@
+    \font\xxtextitalic="Minion Pro/I" at #2\p@
+    \font\xxxtextitalic="Minion Pro/I" at #3\p@
+%
+    \font\xtextbold="Minion Pro/B" at #1\p@
+    \font\xxtextbold="Minion Pro/B" at #2\p@
+    \font\xxxtextbold="Minion Pro/B" at #3\p@
+%
+    \font\xtextteletype="Latin Modern Mono" at #1\p@
+    \font\xxtextteletype="Latin Modern Mono" at #2\p@
+    \font\xxxtextteletype="Latin Modern Mono" at #3\p@
+% Math fonts
+    \font\xmathtext=cmr10 at #4\p@ % must be tfm based font
+    \font\xxmathtext="Latin Modern Roman/R" at #5\p@
+    \font\xxxmathtext="Latin Modern Roman/R" at #6\p@
+%
+    \font\xmathitalic=lmmi10 at #4\p@
+    \font\xxmathitalic=lmmi10 at #5\p@
+    \font\xxxmathitalic=lmmi10 at #6\p@
+%
+    \font\xmathsymbol=lmsy10 at #4\p@
+    \font\xxmathsymbol=lmsy10 at #5\p@
+    \font\xxxmathsymbol=lmsy10 at #6\p@
+%
+    \font\xmathext=lmex10 at #4\p@
+    \font\xxmathext=lmex10 at #5\p@
+    \font\xxxmathext=lmex10 at #6\p@
+%
+    \font\xtextsansroman="Myriad Pro/BI" at #1\p@
+%
+    \def\SMC{\xxtextroman}%
+    \def\ss{\xtextsansroman}
+%
+% Setting up font families
+% % family 0
+    \textfont0=\xmathtext
+    \scriptfont0=\xxmathtext
+    \scriptscriptfont0=\xxxmathtext
+% family 1
+    \textfont1=\xmathitalic
+    \scriptfont1=\xxmathitalic
+    \scriptscriptfont1=\xxxmathitalic
+% family 2
+    \textfont2=\xmathsymbol
+    \scriptfont2=\xxmathsymbol
+    \scriptscriptfont2=\xxxmathsymbol
+% family 3   don't used in sup/sub scripts??
+    \textfont3=\xmathext
+    \scriptfont3=\xxmathext
+    \scriptscriptfont3=\xxxmathext
+% family 4
+    \textfont\itfam=\xtextitalic
+    \scriptfont\itfam=\xxtextitalic
+    \scriptscriptfont\itfam=\xxxtextitalic
+% family 5
+%     \newfam\slfam \def\sl{\fam\slfam\tensl} % \sl is family 5
+    \def\sl{\fam\slfam\tensl} % \sl is family 5
+% family 6 (plain codes)
+    \textfont\bffam=\xtextbold
+    \scriptfont\bffam=\xxtextbold
+    \scriptscriptfont\bffam=\xxxtextbold
+% family 7
+    \textfont\ttfam=\xtextteletype
+    \scriptfont\ttfam=\xxtextteletype
+    \scriptscriptfont\ttfam=\xxxtextteletype
+% Font switches
+    \def\rm{\fam0\xtextroman}%
+    \def\mit{\fam\@ne}%
+    \def\oldstyle{\fam\@ne\xmathitalic}%
+    \def\cal{\fam\tw@}
+    \def\it{\fam\itfam\xtextitalic}%
+    \def\bf{\fam\bffam\xtextbold}%
+%     \def\bfit{\fam\bolditalicfam\textbolditalic}%
+    \def\bfit{\textbolditalic}%
+    \def\tt{\fam\ttfam\xtextteletype}%
+% Baselineskip, parindent, etc
+    \normalbaselineskip=#7\p@% approx 3pt leading
+    \smallskipamount=0.25\normalbaselineskip plus 1.5\p@ minus 1\p@%
+    \medskipamount=0.5\normalbaselineskip plus 3.375\p@% minus 2\p@%
+    \bigskipamount=#7\p@ plus 3\p@ minus 2\p@%
+% Math 
+    \abovedisplayskip=0.5\normalbaselineskip plus 0.25\normalbaselineskip
+    \abovedisplayshortskip=0pt plus 0.25\normalbaselineskip
+    \belowdisplayskip=0.5\normalbaselineskip plus 0.25\normalbaselineskip
+    \belowdisplayshortskip=0.5\normalbaselineskip plus 0.25\normalbaselineskip
+% Rest
+    \parindent=\normalparindent % should no change
+    \parskip=0\p@ plus 0\p@%
+    \normallineskip=1\p@%
+    \normallineskiplimit=\z@%
+    \splittopskip=9\p@% strutt height should not change too??
+    \setbox\strutbox=\hbox{\vrule height9\p@ depth5\p@ width\z@}%
+    \normalbaselines\rm}
+
+\def\roman#{\bgroup\rm\let\next= }
+\def\bold#{\bgroup\bf\let\next= }
+\def\ttype#{\bgroup\tt\let\next= }
+\def\italic#1%
+    {\begingroup
+     \def \next
+         {\def \next
+              {\setbox 0 = \hbox {\nexttoken}%
+               \ifdim \ht 0< \fontdimen 5 \font
+                  \it #1%
+               \else
+                  \it #1\/%
+               \fi}% setbox
+          \ifcat A\noexpand \nexttoken
+             \next
+          \else 
+             \ifcat 0\noexpand \nexttoken
+                \next
+             \else
+                \ifcat \space \noexpand \nexttoken
+                \else
+                %%% \message {?: \meaning \nexttoken}%
+                \fi
+                \it #1\/%
+             \fi
+          \fi
+          \endgroup}% next
+     \futurelet \nexttoken \next}
+
+\def\bolditalic#1%
+    {\begingroup
+     \def \next
+         {\def \next
+              {\setbox 0 = \hbox {\nexttoken}%
+               \ifdim \ht 0< \fontdimen 5 \font
+                  \it #1%
+               \else
+                  \bfit #1\/%
+               \fi}% setbox
+          \ifcat A\noexpand \nexttoken
+             \next
+          \else 
+             \ifcat 0\noexpand \nexttoken
+                \next
+             \else
+                \ifcat \space \noexpand \nexttoken
+                \else
+                %%% \message {?: \meaning \nexttoken}%
+                \fi
+                \bfit #1\/%
+             \fi
+          \fi
+          \endgroup}% next
+     \futurelet \nexttoken \next}
+
+\catcode`\@=12
+
+\catcode`\|=13
+\def|{\begingroup\setupverbatim\doverbatim|}%
+
+\endinput
+
+% #1, #2, #3 -- text sizes
+% #4, #5, #6 
+% #7         -- baseline
+\fontsetup{12}{10}{8}{12}{10}{8}{15}
+
+$x-y$
+
+$x+y$
+
+$x=y$
+
+$x\ne y$
