@@ -2,11 +2,13 @@
 
 \newdimen\normalparindent
 \normalparindent=20\p@
+% increase baselineskip
+\def\makefootline{\baselineskip\numexpr12*3\relax\p@\lineskiplimit\z@\line{\the\footline}}
 
 \def\fontsetup#1#2#3#4#5#6#7{%
 % Text fonts
     \font\xtextroman="Minion Pro:+onum" at #1\p@
-    \let\tenrm\xtextroman
+    \font\tenrm="Minion Pro" at #1\p@ % footline
     \font\xxtextroman="Minion Pro:+onum" at #2\p@
     \font\xxxtextroman="Minion Pro:+onum" at #3\p@
 %
@@ -208,15 +210,7 @@
 
 \uselanguage{polish}
 
-%% A4 page
-
-%%\newdimen\pagewidth \newdimen\pageheight
-\pdfpageheight=297.5mm
-\pdfpagewidth=210mm
-\hsize=150mm
-\vsize=242.5mm
-%%\pagewidth=\hsize \pageheight=\vsize
-\hoffset=4.6mm \voffset=0mm
+\footline={\hss\tenrm[\folio]\hss}
 
 \endinput
 
