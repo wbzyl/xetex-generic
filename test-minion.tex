@@ -20,9 +20,14 @@
 % #4, #5, #6 -- math 
 % #7         -- interlinia
 \fontsetup{14}{11}{8}{14}{11}{8}{18}
-\uselanguage{polish}
 
-DZIEŃ ÓSMY
+\font\sectionFont = "Minion Pro:+smcp" at 16pt
+
+\outer\def\section#1\par{\vskip0pt plus.1\vsize\penalty-250
+  \vskip0pt plus-.1\vsize\bigskip\vskip\parskip
+  \message{#1}\leftline{\sectionFont#1}\nobreak\smallskip\noindent}
+
+\section Dzień Ósmy
 
 Ponieważ mam zaszczyt opowiadać wam moje przygody, łatwo więc
 pojmiecie, że nie umarłem od wypitej - jak myślałem -
@@ -52,25 +57,34 @@ W istocie, przekonałem się, że ma słuszność. Przypomniałem sobie, że
 Emina wczoraj zawiesiła mi na szyi plecionkę z włosów swoich i
 Zibeldy, i sam nie wiedziałem, jak sobie tę przemianę tłumaczyć.
 
-Kabalista spojrzał na mnie bystrym wzrokiem i rzekł:
+\section Przerwa na matematykę
 
-- Nie, ty do nas nie należysz. Nazywasz się Alfons, twoja matka rodzi
-się z Gomelezów, jesteś kapitanem w gwardii wallońskiej, masz wiele
-odwagi, ale mało doświadczenia. Mniejsza o to, trzeba naprzód stąd się
-wydostać, a potem zobaczymy, co z sobą poczniemy.
+$$
+      \sum_{i=1}^{n} i = {n(n+1)\over 2}
+$$
+$$
+      \left[\matrix{1&2&3\cr4&5&6\cr7&8&9\cr}\right]
+$$
+$$
+      {(n_1+n_2+\cdots+n_m)!\over n_1!\,n_2!\ldots n_m!}
+      ={n_1+n_2\choose n_2}\ldots{n_1+n_2+\cdots+n_m\choose n_m}
+$$
+$$
+      \{\underbrace{\overbrace{\mathstrut a,\ldots,a}^{k\;a'\rm s},
+      \overbrace{\mathstrut b,\ldots,b}^{l\;b'\rm s}\>}_{k+1\rm\;elements}\}
+$$
+$$
+      \sqrt{1+\sqrt{1+\sqrt{1+\sqrt{1+\sqrt{1+\sqrt{1+\sqrt{1+x}}}}}}}
+$$
+$$
+      \alpha_\beta + \beta_\alpha = \Gamma'_8
+$$
+$$
+      \pmatrix{\pmatrix{a&b\cr c&d} & \pmatrix{e&f\cr g&h}\cr
+      0&\pmatrix{i&j\cr k&l}}
+$$
 
-Brama zagrody była otwarta, wyszliśmy i znowu ujrzałem przed sobą
-przeklętą dolinę Los Hermanos. Kabalista zapytał mnie, dokąd chcę się
-udać. Odpowiedziałem mu, że mam zamiar udać się drogą w kierunku
-Madrytu.
-
-- Zgoda - rzekł - ja także idę w tę stronę, ale zacznijmy naprzód od
-przyjęcia jakiego posiłku.
-
-[...]
-
-
-OPOWIADANIE PASZEKA
+\section Opowiadania Paszeka
 
 Mój ojcze, właśnie znajdowałeś się w kaplicy i śpiewałeś litanie, gdy
 posłyszałem kołatanie do drzwi i beczenie zupełnie podobne do tego,
