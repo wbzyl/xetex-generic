@@ -38,7 +38,7 @@
  \gdef\XWHERE#1^^M{\gdef\XXWHERE{\smc#1}\endgroup}}
 
 % wartości domyślne
-\ZESTAW Zestaw A
+\ZESTAW Zestaw 8
 \WHERE Gdańsk
 
 \font\manual=manfnt at 18bp % font used for the METAFONT logo, etc.
@@ -55,20 +55,20 @@
   \box0
   \bigskip
   \hrule
-  \medskip
+  \bigskip
   \endgroup}
 
 \def\inter{\medskip\noindent\ignorespaces}
 
 % Następne zadanie
-\def\filbreak{\par\vfil\penalty-500\vfilneg}
+%\def\filbreak{\par\vfil\penalty-500\vfilneg}
+\def\filbreak{\vfil\penalty-500\vfilneg}
 \font\numberF=plbx10 at 12pt
 \newdimen\zskipamount \zskipamount=\bigskipamount
 \newcount\z@dcnt
 \newcount\l@ttercnt \l@ttercnt=``
-\def\Z{\global\advance\z@dcnt by 1 \global\l@ttercnt=``
+\def\Z{\medbreak\global\advance\z@dcnt by 1 \global\l@ttercnt=``
   \filbreak
-  \vskip\zskipamount
   \indent\hang
     \llap{\hbox to \parindent{{\numberF\number\z@dcnt}.\hss}}\ignorespaces}
 \def\ZA{\Z\A}
@@ -260,6 +260,8 @@
 \interlinepenalty=10000
 \parindent=3em
 \raggedright
+
+\def\fillbottom{\vfil\line{}}
 
 \catcode`\@=0
 

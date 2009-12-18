@@ -1,4 +1,7 @@
-test-minion.log
+*.log
+klucz.tex
 test-minion.pdf
+test-kolokwium.tex
+test-test-abc.pdf
 \#.*
 *~
