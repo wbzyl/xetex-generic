@@ -1,0 +1,52 @@
+% !TEX TS-program = xetex
+% !TEX encoding = UTF-8
+
+\input mimulcol.tex % GUSTLIB
+\input minion-pro.tex
+\input test-abc.tex
+
+% #1, #2, #3 -- text
+% #4, #5, #6 -- math sizes
+% #7         -- baseline
+@fontsetup{12}{10}{8}{12}{10}{8}{16}
+
+@raggedbottom
+
+@beginmulticols 2
+
+@ZESTAW SP / 12A
+@WHERE  Instytut Informatyki
+
+@PRINTHEADER
+
+@Z Każdy ze studentów Informatyki ma założone konto pocztowe na
+   serwerze {\it Sigma}. 
+   Będąc zalogowani na \italic{Sigmie} możemy wysłać maila za
+   pomocą:
+@a+  programu |mutt|
+@b+  edytora Emacs
+@c-  programu |mailaddr|
+
+@Z Polecenie |whoami| wypisze na ekran:
+@#
+@a+ login zalogowanego użytkownika
+@b- loginy wszystkich zalogowanych w~laboratorium użytkowników
+@c- loginy wszystkich zalogowanych użytkowników
+
+@Z Po wykonaniu kodu:
+\verbatim@@
+char s1[] = "ala";
+*(s1+1) = 'g';
+@@
+Tablica |s1| będzie równa:
+@a- |ala|
+@B+ |aga|
+@C- |gla|
+
+@endmulticols
+
+@PRINTNOKEYS
+
+@PRINTKEYS
+
+@end

@@ -1,34 +1,66 @@
-% W³odek Bzyl  <matwb@univ.gda.pl>
+% WÅ‚odek Bzyl  <matwb@univ.gda.pl>                   21.12.2009
 %
-% Format A4 do sk³adu testów. 
-
-\input font-plr.sty
-\input tpagesize.tex
-\input mimulcol.tex
-\input gustlib-verbatim.tex
+% format do skÅ‚adu testÃ³w
 
 \catcode`\@=11
 
+% rozmiar strony
+
+\newdimen\pagewidth \newdimen\pageheight
+
+\hsize=190mm \vsize=277mm
+
+\pagewidth=\hsize 
+\pageheight=\vsize
+
+\hoffset=-15mm 
+\voffset=-14mm
+
+% format
+
 \newlinechar=`\^^J
-\def\thisstyle{JPTEST}
-\def\fileversion{1.0}
-\def\filedate{8 XII 2004} % test z JP
+\def\thisstyle{WB_TEST}
+\def\fileversion{2.71}
+\def\filedate{12.12.2009}
 \def\\{\hfil\break}
 
-\message{Format: `\thisstyle\space\fileversion'\space<\filedate>^^J}
+\newlinechar=`\^^J
+\def\thisstyle{ZADANIA}
+\def\fileversion{2.71}
+\def\filedate{12/XII 2009}
+
+\message{Format: \thisstyle\space\fileversion\space<\filedate>^^J}
 
 \def\ZESTAW{\begingroup\catcode`\^^M=12 \XZESTAW}
 \def\WHERE{\begingroup\catcode`\^^M=12 \XWHERE}
 {\catcode`\^^M=12 %
  \gdef\XZESTAW#1^^M{\gdef\XXZESTAW{#1}\endgroup}%
- \gdef\XWHERE#1^^M{\gdef\XXWHERE{#1\hfill\it Zestaw \XXZESTAW}\endgroup}}
+ \gdef\XWHERE#1^^M{\gdef\XXWHERE{\smc#1}\endgroup}}
 
-% warto¶ci domy¶lne
-\ZESTAW 0
-\WHERE {\bf Test z Jêzyków Programowania\ \ \ \ \number\year/\number\month
-        \hfil \it Zestaw \XXZESTAW}
+% wartoÅ›ci domyÅ›lne
+\ZESTAW Zestaw A
+\WHERE GdaÅ„sk
 
-% Nastêpne zadanie
+\font\manual=manfnt at 18bp % font used for the METAFONT logo, etc.
+\def\dbend{{\manual\char127}} % dangerous bend sign
+
+\def\PRINTHEADER{\resetZcounter
+  \begingroup
+  \fontsetup{14}{12}{10}{14}{12}{10}{14}
+  \setbox0=\vtop{\halign{&\hss\ss##\quad\cr
+     \lower5pt\hbox{\dbend}\kern 34pt 
+  \smc Grupa:&\smc \XXZESTAW\cr\noalign{\medskip}
+  \bf Nazwisko:\cr\noalign{\medskip}
+  \bf ImiÄ™:\cr}}
+  \box0
+  \bigskip
+  \hrule
+  \medskip
+  \endgroup}
+
+\def\inter{\medskip\noindent\ignorespaces}
+
+% NastÄ™pne zadanie
 \def\filbreak{\par\vfil\penalty-500\vfilneg}
 \font\numberF=plbx10 at 12pt
 \newdimen\zskipamount \zskipamount=\bigskipamount
@@ -40,8 +72,9 @@
   \indent\hang
     \llap{\hbox to \parindent{{\numberF\number\z@dcnt}.\hss}}\ignorespaces}
 \def\ZA{\Z\A}
+\def\resetZcounter{\global\z@dcnt=0\relax}
 
-% Zapisz odpowied¼ do pliku
+% Zapisz odpowiedÅº do pliku
 \newwrite\answers
 \immediate\openout\answers=klucz.tex
 \immediate\write\answers{\string\odZestawu=0 }
@@ -51,13 +84,13 @@
 \newcount\totalans \totalans=3
 \newcount\currentans \currentans=1
 % Lepszy interfejs..
-% Zmieniæ, je¶li liczba zadañ ró¿na od 50!
+% ZmieniÄ‡, jeÅ›li liczba zadaÅ„ rÃ³Å¼na od 50!
 %\newcount\maxincol \maxincol=25
 \newcount\maxincol \maxincol=100
 \newcount\currentrow \currentrow=1
 \newcount\boxno \boxno=0
 
-% Wybierz miêdzy a), b), c)
+% Wybierz miÄ™dzy a), b), c)
 \def\hang{\hangindent\parindent}
 \def\textindent#1{\append#1%
    \ifnum\currentans=\totalans
@@ -111,7 +144,7 @@
 \def\crrule{\cr\noalign{\hrule}}
 %\font\afont=plr10
 
-% G³ówka
+% GÅ‚Ã³wka
 \def\G{\!&\rm && a&& b&& c&\cr}
 
 \def\key#1{\setbox #1=\vbox\bgroup\offinterlineskip
@@ -123,7 +156,7 @@
 %\def\keys#1#2{\line{\hss\box#1\hskip0.5in\box#2\hss}}
 \def\keys{\hbox to 190mm{\hss\box0\hss}}
 
-\def\printkeys{\immediate\write\answers{\noexpand\endkey}%
+\def\PRINTKEYS{%\immediate\write\answers{\noexpand\endkey}%
    \def\R##1##2##3{\!&\global\advance\odZestawu by 1
       \rm\number\odZestawu &&$##1$&&$##2$&&$##3$&\crrule}
    \vfil\eject
@@ -137,11 +170,11 @@
    \fontsetup{10}{7}{5}{10}{7}{5}{12}
    \keys
    \medskip
-   \noindent{\tenit Legenda:\enspace$+=\hbox{TAK}$\quad$-=\hbox{NIE}$}
+   \noindent{\it Legenda:\enspace$+=\hbox{TAK}$\quad$-=\hbox{NIE}$}
    \par
    \endgroup}
  
-\def\printnokeys{\immediate\write\answers{\noexpand\endkey}%
+\def\PRINTNOKEYS{\immediate\write\answers{\noexpand\endkey}%
    \def\R##1##2##3{\!&\global\advance\odZestawu by 1
       \rm\number\odZestawu &&\enspace&&\enspace&&\enspace&\crrule}
    \vfil\eject
@@ -156,7 +189,7 @@
    \par
    \endgroup}
 
-% Krótki opis testu -- reszta
+% KrÃ³tki opis testu -- reszta
 
 \font\zestawF=plti10 at 14pt
 
@@ -168,7 +201,7 @@
 
 \def\raggedright{\rightskip\z@ plus10em \spaceskip.3333em \xspaceskip.5em\relax}
 
-% OTR 
+% OTR
 
 \maxdepth=2.2pt
 
@@ -222,37 +255,11 @@
 
 \def\acro#1{{\SMC #1}\spacefactor1000 }
 
-% Pozosta³e parametry
+% PozostaÅ‚e parametry
 \parskip=0pt plus 3pt
 \interlinepenalty=10000
 \parindent=3em
 \raggedright
-\columnseprule=0.8pt
-
-\def\verbatimbaselinecorr{0.5pt}
-
-% Verbatim macros, see DeK, pp. 344, 380--382, 351--352
-
-%% \def\uncatcodespecials{\def\do##1{\catcode`##1=12}\dospecials}%
-%% \def\setupverbatim {\tt \advance\baselineskip-\verbatimbaselinecorr
-%%   \obeylines \uncatcodespecials \obeyspaces}%
-%% {\obeyspaces \global\let =\ }% this causes that leading blanks aren't skipped
-%% {\catcode`\|0 \catcode`\\12 |gdef|brev{\brev}}%
-%% \def\?{?}
-%% \catcode`\?13
-%% \edef\verb{\begingroup \let\noexpand?\noexpand\inverb
-%%   \noexpand\setupverbatim \noexpand\doverbatim{\brev}}%
-%% \def\doverbatim#1{\def\next##1#1{##1\endgroup}\next}%
-%% \def\shortverb{\begingroup\setupverbatim\doverbatim}%
-%% \def\inverb#1?{{$\langle$\it #1\/$\rangle$}}
-%% \def?{\shortverb?}
-
-% Example:
-%   \verb
-%   verbatim text
-%   \brev
-% or inline
-%   |!verbatim $text$|
 
 \catcode`\@=0
 

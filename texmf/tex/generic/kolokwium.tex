@@ -1,4 +1,4 @@
-% Włodek Bzyl <matwb@univ.gda.pl>                      12/XII 2007
+% Włodek Bzyl <matwb@ug.edu.pl>                      12/XII 2009
 %
 % TODO:
 %
@@ -6,9 +6,6 @@
 %   odcinek:  (1; 2)
 %   wektor:   [1, 2]
 %   punkt:    (1, 2)
-
-\uselanguage{polish}
-\input gustlib-verbatim.tex
 
 \catcode`\@=11
 
@@ -19,7 +16,7 @@
 \pagewidth=\hsize 
 \pageheight=\vsize
 
-\hoffset=-14mm 
+\hoffset=-15mm 
 \voffset=-14mm
 
 \newlinechar=`\^^J
@@ -59,7 +56,7 @@
 \outer\def\bye{\par\vfill
   \supereject\end}
 
-\def\A{\global\advance\l@ttercnt by 1\hang\textindent}
+\def\A{\global\advance\l@ttercnt by 1\hang\textindent\relax}
 \def\B{\emspace\A}
 \let\C=\B
 
@@ -86,12 +83,10 @@
   \begingroup
   \fontsetup{14}{12}{10}{14}{12}{10}{14}
   \vbox{\halign{&\hss\ss##\quad\cr
-     \lower5pt\hbox{\dbend}\kern 34pt Zestaw:&
-        \number\year~/ #1\cr\noalign{\medskip}
-  Nazwisko:\cr\noalign{\medskip}
-  Imię:\cr}}
-%%   Grupa:\cr\noalign{\medskip}
-%%     Nazwisko, Imię:\cr}}
+     \lower5pt\hbox{\dbend}\kern 34pt 
+  \smc Grupa:&\smc #1\cr\noalign{\medskip}
+  \bf Nazwisko:\cr\noalign{\medskip}
+  \bf Imię:\cr}}
   \bigskip
   \hrule
   \medskip
@@ -102,7 +97,8 @@
 \newcount\odpcounter
 \newdimen\odpvsize \odpvsize=0mm % nie działa
 \def\ODP{\odpcounter=0
-  \bigskip\ignorespaces
+  \vglue-6pt % korekta optyczna
+  \ignorespaces
   \begingroup\offinterlineskip
   \halign{\vrule##&
       \hbox to \hsize{\hss\vbox to \odpvsize{\parindent=5pt
@@ -114,7 +110,7 @@
   \endgroup}
 
 % Krótki opis testu -- reszta
-\font\headerFont="Myriad Pro/BoldItalic" at 14pt
+\font\headerFont="Minion Pro/B" at 12pt
 \def\NAGLOWEK{\begingroup
    \fontsetup{14}{12}{10}{14}{12}{10}{17}
    \hbox to \hsize{\headerFont\XXZESTAWA\hfil\XXWHERE\hfil\XXZESTAWB}
@@ -168,11 +164,9 @@
   \advancepageno}
 \def\columnbox{\leftline{\pagebody}}
 
-\font\sectionFont="Myriad Pro/I" at 14pt
-
-\def\Kolokwium{\bigskip\leftline{\hskip35pt \sectionFont Kolokwium}\medskip}
-\def\Egzamin{\bigskip\leftline{\hskip35pt \sectionFont Egzamin}\medskip}
-\def\Sprawdzian{\bigskip\leftline{\hskip35pt \sectionFont Sprawdzian}\medskip}
+\def\Kolokwium{\bigskip\leftline{\hskip35pt \smc Kolokwium}\medskip}
+\def\Egzamin{\bigskip\leftline{\hskip35pt \smc Egzamin}\medskip}
+\def\Sprawdzian{\bigskip\leftline{\hskip35pt \smc Sprawdzian}\medskip}
 
 % Pozostałe parametry
 \parskip=0pt plus 3pt
